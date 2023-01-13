@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/main.dir/src/oja.cpp.o -o main 

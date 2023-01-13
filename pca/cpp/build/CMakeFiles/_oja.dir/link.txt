@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -O3 -Wall -fopenmp -pthread -flto -shared  -o _oja.cpython-310-x86_64-linux-gnu.so CMakeFiles/_oja.dir/src/oja.cpp.o 
