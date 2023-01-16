@@ -1,8 +1,8 @@
 import h5py
 import numpy as np
 from scipy import sparse
-from pca_mdl2 import oja_batch, oja_batch_cpp, oja_batch_cupy, oja_pca
-from pca import exact_pca, history_pca
+from py.oja_method import oja_batch, oja_batch_cpp, oja_batch_cupy, oja_pca
+from py.pca_benchmark import exact_pca, history_pca
 import cupy as cp
 
 # from _oja import oja_batch
@@ -20,9 +20,13 @@ def read_matrix(path: Path):
 
 
 data_path = "/data1/intern/pca_benchmark/"
-csr_mtx = read_matrix(data_path + "10.h5")
+csr_mtx = read_matrix(data_path + "01.h5")
 print("load success!")
 print(f"data shape: {csr_mtx.shape}\n{'-' * 20}")
+# Log norm
+sum_mtx = np.sum(csr_mtx, axis = 1)
+new_mtx = csr_mtx / sum_mtx * 10000
+csr_mtx = np.log1p(csr_mtx)
 
 k = 50
 

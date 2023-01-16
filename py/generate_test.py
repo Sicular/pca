@@ -19,8 +19,8 @@ def get_correlated_dataset(n, d=3):
 input = get_correlated_dataset(10000, 100)
 input = sparse.csr_matrix(input)
 
-from pca_mdl2 import oja_pca
-from pca import history_pca
+from py.oja_method import oja_pca
+from py.pca_benchmark import history_pca
 from pca_pm import center_power_method, power_method
 
 k = 5
@@ -35,9 +35,9 @@ power_vars = np.sum(np.var(power_pca_mtx, axis=0))
 input = np.array(input.todense())
 input_vars = np.sum(np.var(input, axis=0))
 print("data mean:", np.mean(input, axis=0))
-print("oja vars: ", oja_vars, np.sort(np.var(oja_pca_mtx, axis=0)))
-print("his vars: ", history_vars, np.sort(np.var(history_pca_mtx, axis=0)))
-print("pow vars: ", power_vars, np.sort(np.var(power_pca_mtx, axis=0)))
+print("oja vars: ", oja_vars, np.sort(np.var(oja_pca_mtx, axis=0)) / np.max(np.var(oja_pca_mtx, axis=0)))
+print("his vars: ", history_vars, np.sort(np.var(history_pca_mtx, axis=0)) / np.max(np.var(history_pca_mtx, axis=0)))
+print("pow vars: ", power_vars, np.sort(np.var(power_pca_mtx, axis=0)) / np.max(np.var(power_pca_mtx, axis=0)))
 print("inp vars: ", input_vars)
 print("oja acc : ", oja_vars / input_vars)
 print("his acc: ", history_vars / input_vars)
@@ -50,3 +50,7 @@ plt.scatter(input.T[0], input.T[1])
 plt.xlim((0,3000))
 plt.ylim((0,3000))
 plt.savefig("./a.png")
+# A
+# log(A+1) 
+# sum(A, axis=1)
+# normalize(A, axis = 1) * 10000

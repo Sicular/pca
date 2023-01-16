@@ -24,6 +24,17 @@ def _adam_coeffs(G, t, m, v, beta1, beta2, lib = np):
 
     return (m, v, mh, vh)
 
+def oja_method(X, k, max_iter, mu, dependency, tol=1e-9):
+    alpha = 0.5
+    w = np.random.normal(0, 1, (X.shape[0], k))
+    w, _ = np.linalg.qr(w)
+    C = X.dot(X.T) / X.shape[1]
+    for i in range(max_iter):
+        w, _ = np.linalg.qr(w)
+    # display3D(X.T, mu, w.T)
+    # display2D(X.T, mu, w.T)
+    return w.T.dot(X)
+
 def oja_batch(
     matrix: Union[np.ndarray, spmatrix],
     k: int,
@@ -59,7 +70,7 @@ def oja_batch(
     indices = np.arange(matrix.shape[0])
     np.random.shuffle(indices)
     matrix = matrix[indices]
-
+    his = [[],[]]
     n_rows, n_cols = matrix.shape
     w = np.random.normal(0, 1, (n_cols, k)).astype("float32")
     w, _ = np.linalg.qr(w)
@@ -75,7 +86,7 @@ def oja_batch(
     step_sz = max(step_sz, 0.5 / (np.mean(np.abs(mh) / np.sqrt(vh + epsilon))))
     s = w - step_sz * (mh / (np.sqrt(vh) + epsilon))
     w, _ = np.linalg.qr(s)
-
+    his[0].append(np.sum(np.var(matrix @ w, axis = 0)))
     print("step size: ", step_sz)
     for start in range(0, n_rows, batch_sz):
         t += 1
@@ -86,7 +97,12 @@ def oja_batch(
         m, v, mh, vh = _adam_coeffs(g, t, m, v, beta1, beta2)
         s = w - step_sz * (mh / (np.sqrt(vh) + epsilon))
         w, _ = np.linalg.qr(s)
+        his[0].append(np.sum(np.var(matrix @ w, axis = 0)))
         
+    fig, ax = plt.subplots(len(his))
+    for i in range(len(his)):
+        ax[i].plot(his[i])
+    fig.savefig()
     return matrix @ w - mean.T @ w
 
 def oja_batch_cupy(
@@ -145,12 +161,13 @@ def oja_batch_cupy(
             shape=(end - start, matrix.shape[1]),
             dtype=cp.float32,
         )
-        sum += cp.ones((1,sX.shape[0])) @ sX 
+        sX._has_canonical_format = True
+        sum += cp.ones((1,sX.shape[0])) @ sX
 
     mean = sum.reshape(-1, 1) / n_rows
     m, v, t = 0, 0, 0
     print(time() - t1) #40s
-
+    his = [[],[]]
     t += 1
     sX = cpx.scipy.sparse.csr_matrix(
         matrix[indices[0:batch_sz].get()],
@@ -163,7 +180,9 @@ def oja_batch_cupy(
     step_sz = max(step_sz, 0.5 / (cp.mean(cp.abs(mh) / cp.sqrt(vh + epsilon))))
     s = w - step_sz * (mh / (cp.sqrt(vh) + epsilon))
     w, _ = cp.linalg.qr(s)
+    # his[0].append(np.sum(np.var(matrix @ w.get(), axis = 0)))
     print(time() - t1)
+    print("step_sz:", step_sz)
 
     for start in range(0, n_rows, batch_sz):
         t += 1
@@ -173,10 +192,18 @@ def oja_batch_cupy(
             shape=(end - start, matrix.shape[1]),
             dtype=cp.float32,
         )
+        sX._has_canonical_format = True
         g = _oja_grad(sX, mean, w, cp)
         m, v, mh, vh = _adam_coeffs(g, t, m, v, beta1, beta2, cp)
         s = w - step_sz * (mh / (cp.sqrt(vh) + epsilon))
         w, _ = cp.linalg.qr(s)
+        # his[0].append(np.sum(np.var(matrix @ w.get(), axis = 0)))
+        step_sz *= t / (t + 1)
+        
+    fig, ax = plt.subplots(len(his))
+    for i in range(len(his)):
+        ax[i].plot(his[i])
+    fig.savefig("./a.png")
     print(time() - t1)
     
     output = cp.zeros((n_rows,k))
@@ -188,6 +215,7 @@ def oja_batch_cupy(
             shape=(end - start, matrix.shape[1]),
             dtype=cp.float32,
         )
+        sX._has_canonical_format = True
         output[start:end] = sX @ w
     output = (output - mean_w).get()
     # print("step size: ", step_sz)
@@ -229,7 +257,7 @@ def oja_pca(
     beta1=0.9,
     beta2=0.999,
 ) -> np.ndarray:
-    if matrix.shape[0]*matrix.shape[1] < 7e7:
+    if matrix.shape[0]*matrix.shape[1] < 7e1:
         print("oja_batch")
         return oja_batch(**locals())
     else:
