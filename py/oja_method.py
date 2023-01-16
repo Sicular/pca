@@ -2,7 +2,6 @@ from scipy.sparse import spmatrix
 from typing import Union
 import numpy as np
 from matplotlib import pyplot as plt
-from _oja import _oja_batch
 import cupy as cp
 import cupyx as cpx
 
