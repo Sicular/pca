@@ -971,3 +971,378 @@ exact time: 103.4537239074707
 appro acc: 0.8826976853408485
 oja acc: 0.7980735209694823
 ---------
+00.h5 load success!
+oja time: 2.09808349609375e-05
+appro time: 10.435962438583374
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+oja time: 1.7027759552001953
+appro time: 0.19310712814331055
+exact time: 0.6336159706115723
+appro acc: 0.88392758467197
+oja acc: 0.9866477175641216
+---------
+01.h5 load success!
+oja time: 10.503955841064453
+appro time: 1.3475587368011475
+exact time: 6.336834907531738
+appro acc: 0.9181038838475863
+oja acc: 0.9909970559202625
+---------
+01.h5 load success!
+oja time: 9.597658157348633
+appro time: 1.3464627265930176
+exact time: 6.314584493637085
+appro acc: 0.9181038838475863
+oja acc: 0.9583933548144841
+---------
+01.h5 load success!
+oja time: 10.256714105606079
+appro time: 1.3042714595794678
+exact time: 6.402503967285156
+appro acc: 0.9181038838475863
+oja acc: 0.9909970559202625
+---------
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+01.h5 load success!
+oja time: 2.9040708541870117
+appro time: 1.3645470142364502
+exact time: 6.4125378131866455
+appro acc: 0.9181038838475863
+oja acc: 0.9365914670174714
+---------
+01.h5 load success!
+oja time: 10.675678730010986
+appro time: 4.288137197494507
+exact time: 25.698875665664673
+appro acc: 0.9309126898267174
+oja acc: 0.9021657973786356
+---------
+01.h5 load success!
+oja time: 10.672588586807251
+appro time: 3.620366334915161
+exact time: 26.10368537902832
+appro acc: 0.9309126898267174
+oja acc: 0.9021657973786356
+---------
+01.h5 load success!
+oja time: 10.657679080963135
+appro time: 3.8336522579193115
+exact time: 25.675517797470093
+appro acc: 0.9309126898267174
+oja acc: 0.9021657973786356
+---------
+01.h5 load success!
+oja time: 10.65575361251831
+appro time: 4.297114610671997
+exact time: 26.12532067298889
+appro acc: 0.9299036690651333
+oja acc: 0.9008866858187705
+---------
+00.h5 load success!
+oja time: 32.5208215713501
+appro time: 10.411482810974121
+00.h5 load success!
+oja time: 5.931624412536621
+appro time: 10.445985555648804
+exact time: 104.08808445930481
+appro acc: 0.8744427408113898
+oja acc: 0.7883378709733184
+---------
+01.h5 load success!
+oja time: 0.9685640335083008
+appro time: 4.274142265319824
+exact time: 26.10672116279602
+appro acc: 0.9269905731638058
+oja acc: 0.9308702078176678
+---------
+00.h5 load success!
+oja time: 5.5548255443573
+00.h5 load success!
+oja time: 5.624289512634277
+00.h5 load success!
+oja time: 5.7906787395477295
+00.h5 load success!
+oja time: 5.728384733200073
+appro time: 4.649932861328125
+exact time: 108.08733081817627
+appro acc: 0.8790664558131999
+oja acc: 0.8069415207656347
+---------
+01.h5 load success!
+oja time: 0.992748498916626
+appro time: 1.359072208404541
+exact time: 25.6402587890625
+appro acc: 0.9301091103675923
+oja acc: 0.9391629831731169
+---------
+00.h5 load success!
+oja time: 5.659552097320557
+appro time: 4.6086506843566895
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8793879928137129
+---------
+01.h5 load success!
+oja time: 0.867764949798584
+appro time: 1.342780590057373
+exact time: 2.1457672119140625e-06
+appro acc: 1.0
+oja acc: 0.9957483820896501
+---------
+00.h5 load success!
+oja time: 86.4094545841217
+appro time: 4.560104846954346
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8685495242079646
+---------
+01.h5 load success!
+00.h5 load success!
+00.h5 load success!
+oja time: 26.630305767059326
+appro time: 4.648486852645874
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8730255956424243
+---------
+01.h5 load success!
+oja time: 15.03757619857788
+appro time: 1.3517096042633057
+exact time: 6.9141387939453125e-06
+appro acc: 1.0
+oja acc: 0.9932179710500249
+---------
+00.h5 load success!
+oja time: 25.785722494125366
+appro time: 4.567906856536865
+exact time: 7.152557373046875e-07
+appro acc: 1.0
+oja acc: 0.8454339460732186
+---------
+01.h5 load success!
+oja time: 15.017128229141235
+appro time: 1.3614046573638916
+exact time: 2.1457672119140625e-06
+appro acc: 1.0
+oja acc: 0.9949520887132453
+---------
+00.h5 load success!
+oja time: 25.894882440567017
+appro time: 4.576154708862305
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8972765838124398
+---------
+01.h5 load success!
+oja time: 14.993673086166382
+appro time: 1.3534786701202393
+exact time: 2.1457672119140625e-06
+appro acc: 1.0
+oja acc: 1.0027451331242543
+---------
+00.h5 load success!
+oja time: 25.9941303730011
+appro time: 4.558236360549927
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8560981667109533
+---------
+01.h5 load success!
+oja time: 14.923371315002441
+appro time: 1.367211103439331
+exact time: 2.6226043701171875e-06
+appro acc: 1.0
+oja acc: 0.9498612835843969
+---------
+00.h5 load success!
+oja time: 26.0531964302063
+appro time: 4.6041905879974365
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.9371358658379035
+---------
+01.h5 load success!
+oja time: 15.06797456741333
+appro time: 1.357862949371338
+exact time: 1.9073486328125e-06
+appro acc: 1.0
+oja acc: 0.9894256351392828
+---------
+00.h5 load success!
+oja time: 26.57814860343933
+appro time: 4.888623476028442
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8887579399201184
+---------
+01.h5 load success!
+oja time: 15.17562222480774
+appro time: 1.379507064819336
+exact time: 4.76837158203125e-06
+appro acc: 1.0
+oja acc: 1.010883741238095
+---------
+00.h5 load success!
+00.h5 load success!
+oja time: 25.980515241622925
+appro time: 4.540974855422974
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8514645388871851
+---------
+01.h5 load success!
+oja time: 14.882710218429565
+appro time: 1.365360975265503
+exact time: 1.6689300537109375e-06
+appro acc: 1.0
+oja acc: 0.9963911151427439
+---------
+00.h5 load success!
+00.h5 load success!
+oja time: 26.30680537223816
+appro time: 4.577495574951172
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8624533296668968
+---------
+01.h5 load success!
+oja time: 15.309770345687866
+appro time: 1.3569347858428955
+exact time: 1.9073486328125e-06
+appro acc: 1.0
+oja acc: 0.9916072283763396
+---------
+00.h5 load success!
+oja time: 27.046387910842896
+appro time: 4.681840896606445
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8402593408474658
+---------
+01.h5 load success!
+oja time: 15.349953889846802
+appro time: 1.3737819194793701
+exact time: 4.5299530029296875e-06
+appro acc: 1.0
+oja acc: 1.0004225145039578
+---------
+00.h5 load success!
+oja time: 26.74310803413391
+appro time: 4.662440538406372
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8532314394777777
+---------
+01.h5 load success!
+oja time: 15.06096887588501
+appro time: 1.364025592803955
+exact time: 1.430511474609375e-06
+appro acc: 1.0
+oja acc: 0.9920789388564835
+---------
+00.h5 load success!
+oja time: 25.867696285247803
+00.h5 load success!
+oja time: 26.670987367630005
+00.h5 load success!
+oja time: 25.695510864257812
+appro time: 10.520892143249512
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.855885692742033
+---------
+01.h5 load success!
+oja time: 15.188120603561401
+appro time: 4.952052354812622
+exact time: 4.291534423828125e-06
+appro acc: 1.0
+oja acc: 0.9981088839554842
+---------
+11.h5 load success!
+00.h5 load success!
+oja time: 26.057430744171143
+appro time: 10.633145809173584
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8220143951172019
+---------
+00.h5 load success!
+oja time: 12.337669610977173
+appro time: 10.397279262542725
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.87534550756221
+---------
+00.h5 load success!
+oja time: 12.423409700393677
+appro time: 11.480649709701538
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8811646102538628
+---------
+00.h5 load success!
+00.h5 load success!
+oja time: 13.591132164001465
+appro time: 11.97487497329712
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8777079721895916
+---------
+00.h5 load success!
+oja time: 13.06152892112732
+appro time: 11.528509378433228
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8784055805520642
+---------
+00.h5 load success!
+oja time: 12.998601198196411
+appro time: 11.53843069076538
+exact time: 7.152557373046875e-07
+appro acc: 1.0
+oja acc: 0.8781492316732902
+---------
+00.h5 load success!
+oja time: 13.14762544631958
+appro time: 11.597740411758423
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8555774924106742
+---------
+00.h5 load success!
+oja time: 13.0181405544281
+appro time: 11.502164840698242
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 0.8669016878260012
+---------
+00.h5 load success!
+oja time: 571.1940777301788
+appro time: 13.955878496170044
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 1.0697531397426623
+---------
+00.h5 load success!
+oja time: 6.701185464859009
+appro time: 5.086844444274902
+exact time: 4.76837158203125e-07
+appro acc: 1.0
+oja acc: 1.001717015837424
+---------
+00.h5 load success!
+oja time: 13.509236097335815
+appro time: 11.855163335800171
+exact time: 2.384185791015625e-07
+appro acc: 1.0
+oja acc: 0.8477102910884438
+---------

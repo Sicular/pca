@@ -23,16 +23,16 @@ def _adam_coeffs(G, t, m, v, beta1, beta2, lib = np):
 
     return (m, v, mh, vh)
 
-def oja_method(X, k, max_iter, mu, dependency, tol=1e-9):
+def oja_method(X, k, max_iter = 10):
     alpha = 0.5
-    w = np.random.normal(0, 1, (X.shape[0], k))
+    w = np.random.normal(0, 1, (X.shape[1], k))
     w, _ = np.linalg.qr(w)
-    C = X.dot(X.T) / X.shape[1]
+    C = X.T @ X / X.shape[1]
     for i in range(max_iter):
-        w, _ = np.linalg.qr(w)
+        w, _ = np.linalg.qr(w + alpha * C @ w)
     # display3D(X.T, mu, w.T)
     # display2D(X.T, mu, w.T)
-    return w.T.dot(X)
+    return X @ w
 
 def oja_batch(
     matrix: Union[np.ndarray, spmatrix],
@@ -167,23 +167,27 @@ def oja_batch_cupy(
     m, v, t = 0, 0, 0
     print(time() - t1) #40s
     his = [[],[]]
-    t += 1
-    sX = cpx.scipy.sparse.csr_matrix(
-        matrix[indices[0:batch_sz].get()],
-        shape=(batch_sz, matrix.shape[1]),
-        dtype=cp.float32,
-    )
-    g = _oja_grad(sX, mean, w, cp)
+    for i in range(3):
+        t += 1
+        sX = cpx.scipy.sparse.csr_matrix(
+            matrix[indices[0:batch_sz].get()],
+            shape=(batch_sz, matrix.shape[1]),
+            dtype=cp.float32,
+        )
+        g = _oja_grad(sX, mean, w, cp)
 
-    m, v, mh, vh = _adam_coeffs(g, t, m, v, beta1, beta2, cp)
-    step_sz = max(step_sz, 0.5 / (cp.mean(cp.abs(mh) / cp.sqrt(vh + epsilon))))
-    s = w - step_sz * (mh / (cp.sqrt(vh) + epsilon))
-    w, _ = cp.linalg.qr(s)
+        m, v, mh, vh = _adam_coeffs(g, t, m, v, beta1, beta2, cp)
+        step_sz = max(step_sz, 0.5 / (cp.mean(cp.abs(mh) / cp.sqrt(vh + epsilon))))
+        s = w - step_sz * (mh / (cp.sqrt(vh) + epsilon))
+        w, _ = cp.linalg.qr(s)
+        # his[0].append(cp.sum(cp.var(cp.array(matrix.todense()) @ w, axis = 0)).get())
     # his[0].append(np.sum(np.var(matrix @ w.get(), axis = 0)))
+    # his[1].append(step_sz.get() / cp.sqrt(vh + epsilon).get())
     print(time() - t1)
+    # step_sz = 1e8
     print("step_sz:", step_sz)
 
-    for start in range(0, n_rows, batch_sz):
+    for start in range(batch_sz, n_rows, batch_sz):
         t += 1
         end = min(start + batch_sz, n_rows)
         sX = cpx.scipy.sparse.csr_matrix(
@@ -196,8 +200,9 @@ def oja_batch_cupy(
         m, v, mh, vh = _adam_coeffs(g, t, m, v, beta1, beta2, cp)
         s = w - step_sz * (mh / (cp.sqrt(vh) + epsilon))
         w, _ = cp.linalg.qr(s)
-        # his[0].append(np.sum(np.var(matrix @ w.get(), axis = 0)))
-        step_sz *= t / (t + 1)
+        # his[0].append(cp.sum(cp.var(cp.array(matrix.todense()) @ w, axis = 0)).get())
+        # his[1].append(step_sz / cp.sqrt(vh + epsilon).get())
+        # step_sz *= t / (t + 1)
         
     fig, ax = plt.subplots(len(his))
     for i in range(len(his)):
@@ -221,31 +226,89 @@ def oja_batch_cupy(
 
     return output
 
-
-def oja_batch_cpp(
+def oja_batch_pp_cupy(
     matrix: Union[np.ndarray, spmatrix],
-    k: int,
+    k: int = 6,
     batch_sz=2048,
     step_sz=1e-3,
     epsilon=1e-8,
     beta1=0.9,
     beta2=0.999,
 ) -> np.ndarray:
-    indices = np.arange(matrix.shape[0])
-    np.random.shuffle(indices)
-    matrix = matrix[indices]
+    """AdaOja principal component analysis implementation.
+
+    Parameters
+    ----------
+        matrix : array or sparse matrix
+                Input (objects x features) matrix for PCA.
+        k : int
+                Number of principal components.
+
+    Returns
+    -------
+        pca : array
+                (objects x k) PCA matrix.
+
+    Examples
+    --------
+        >>> pca_mtx = history_pca(matrix, 50)
+        array([[ 1.33843906e+02,  5.88548225e+02, -4.29797162e+02, ...,
+        -5.39586482e+00,  9.15233611e+00,  1.46966907e-01],
+        ...,
+        [ 2.85430135e+02,  8.86089300e+02,  1.25807185e+02, ...,
+        -4.81416391e+00,  3.71223338e+00,  3.77609306e+00]])
+    """
+    n_rows, n_cols = matrix.shape
     mean = np.array(matrix.mean(axis=0)).reshape(-1, 1)
+    w = None
+    s = int(np.ceil(np.log2(k + 1)))
+    for i in range(s):
+        if i == 0:
+            w = np.random.normal(0, 1, (matrix.shape[1], k - k // 2))
+        else:
+            w = np.hstack(
+                (
+                    w,
+                    np.random.normal(
+                        0, 1, (matrix.shape[1], k // (2**i) - k // 2 ** (i + 1))
+                    ),
+                )
+            )
+        w, _ = np.linalg.qr(w)
+        for start in range(0, n_rows, batch_sz):
+            end = min(start + batch_sz, n_rows)
+            sX = matrix[start:end]
+            g = _oja_grad(sX, mean, w)
+            alpha = 1
+            delta = alpha * g
+            w, _ = np.linalg.qr(w + delta)
+    return matrix @ w
+
+
+# def oja_batch_cpp(
+#     matrix: Union[np.ndarray, spmatrix],
+#     k: int,
+#     batch_sz=2048,
+#     step_sz=1e-3,
+#     epsilon=1e-8,
+#     beta1=0.9,
+#     beta2=0.999,
+# ) -> np.ndarray:
+#     indices = np.arange(matrix.shape[0])
+#     np.random.shuffle(indices)
+#     matrix = matrix[indices]
+#     mean = np.array(matrix.mean(axis=0)).reshape(-1, 1)
     
-    return _oja_batch(
-        matrix,
-        mean,
-        k,
-        batch_sz,
-        step_sz,
-        epsilon,
-        beta1,
-        beta2,
-    )
+#     return _oja_batch(
+#         matrix,
+#         mean,
+#         k,
+#         batch_sz,
+#         step_sz,
+#         epsilon,
+#         beta1,
+#         beta2,
+#     )
 
 def oja_pca(
     matrix: Union[np.ndarray, spmatrix],

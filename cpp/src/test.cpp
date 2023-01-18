@@ -1,25 +1,7 @@
-#include <stdlib.h>
+#include <pybind11/pybind11.h>
+#include <core/test.h>
 
-#include <Eigen/Sparse>
-#include <iostream>
-
-using SpMt = Eigen::SparseMatrix<int32_t>;
-
-using namespace std;
-
-int main(int argc, char const *argv[]) {
-  auto a = SpMt(2, 2);
-  a.ind
-  auto b = SpMt(2, 2);
-  a.insert(1, 1) = 1;
-  b.insert(1, 1) = 2;
-  b.makeCompressed();
-  a.makeCompressed();
-  SpMt c = a * b;
-  std::cout << a << std::endl;
-  std::cout << a.isCompressed() << std::endl;
-  std::cout << c << std::endl;
-  std::cout << c.isCompressed() << std::endl;
-
-  return 0;
+PYBIND11_MODULE(_pca, m) {
+  m.def("_history_pca", &print_any_thing);
+  // m.def("check", &pca::check_matrix);
 }

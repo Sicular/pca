@@ -1,4 +1,4 @@
-# Install script for directory: /data1/intern/nghiatnh/pca/cpp
+# Install script for directory: /data1/intern/nghiatnh/pca_git/cpp
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,7 +44,7 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/data1/intern/nghiatnh/pca/cpp/build/include/pybind11/cmake_install.cmake")
+  include("/data1/intern/nghiatnh/pca_git/cpp/build/include/pybind11/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -55,5 +55,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/data1/intern/nghiatnh/pca/cpp/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/data1/intern/nghiatnh/pca_git/cpp/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

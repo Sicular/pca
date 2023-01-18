@@ -1,4 +1,4 @@
-# Install script for directory: /data1/intern/nghiatnh/pca/cpp/include/pybind11
+# Install script for directory: /data1/intern/nghiatnh/pca_git/cpp/include/pybind11
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

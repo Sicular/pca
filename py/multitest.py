@@ -1,11 +1,9 @@
 import h5py
 import numpy as np
 from scipy import sparse
-from py.oja_method import oja_pca
-from py.pca_benchmark import exact_pca, history_pca
-from pca_pm import center_power_method
-from DBPCA import DBPCA
-from mypca import my_pca_new
+from oja_method import oja_pca
+from pca_benchmark import exact_pca, history_pca
+# from pca_pm import center_power_method
 
 import math
 from scipy.stats import lognorm
@@ -46,23 +44,23 @@ list_files = [
 for file in list_files[:1]:
     f = open("multi_test.txt", "a")
     csr_mtx = read_matrix(data_path + file)
-    print(csr_mtx.shape)
+    print("loaded size: ", csr_mtx.shape)
     csr_mtx = csr_mtx[:, :]
+    print("execution size: ", csr_mtx.shape)
     print(f"{file} load success!")
     f.write(f"{file} load success!\n")
     
     # sum_mtx = np.sum(csr_mtx, axis = 1) +1
     # new_mtx = csr_mtx / sum_mtx * 10000
     # csr_mtx = np.log1p(csr_mtx)
-    np.random.seed(42)
+    # np.random.seed(42)
     csr_mtx = lognorm.rvs(s=1, scale = math.exp(1), size=(csr_mtx.shape[0],csr_mtx.shape[1]))
     csr_mtx = sparse.csr_matrix(csr_mtx)
-    print(csr_mtx.shape)
 
     k = 50
 
     t1 = time()
-    oja_pca_mtx = oja_pca(csr_mtx, k, batch_sz=512)
+    oja_pca_mtx = oja_pca(csr_mtx, k)
     t2 = time()
     print("oja time: ", t2 - t1)
     f.write(f"oja time: {t2 - t1}\n")
@@ -74,7 +72,7 @@ for file in list_files[:1]:
     f.write(f"appro time: {t2 - t1}\n")
     
     t1 = time()
-    exact_pca_mtx = exact_pca(csr_mtx, k=k)
+    exact_pca_mtx = appro_pca_mtx #exact_pca(csr_mtx, k=k)
     t2 = time()
     print("exact time: ", t2 - t1)
     f.write(f"exact time: {t2 - t1}\n")

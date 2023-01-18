@@ -1,7 +1,7 @@
 import h5py
 import numpy as np
 from scipy import sparse
-from oja_method import oja_batch, oja_batch_cpp, oja_batch_cupy, oja_pca
+from oja_method import oja_batch, oja_batch_cupy, oja_pca
 from pca_benchmark import exact_pca, history_pca
 import cupy as cp
 
@@ -19,16 +19,14 @@ def read_matrix(path: Path):
     return sparse.csr_matrix((data, indices, indptr), shape=shape, dtype=np.float32)
 
 
-data_path = "/data1/intern/pca_benchmark/"
-csr_mtx = read_matrix(data_path + "02.h5")
+data_path = "/data1/iamb/pca/data/"
+csr_mtx = read_matrix(data_path + "GSE154826.hdf5")
 print("load success!")
 print(f"data shape: {csr_mtx.shape}\n{'-' * 20}")
 # Log norm
-sum_mtx = np.sum(csr_mtx, axis = 1) + 1
-print(sum_mtx.shape)
-new_mtx = csr_mtx / sum_mtx * 10000
-csr_mtx = sparse.csr_matrix(np.log1p(new_mtx))
-print(csr_mtx)
+# sum_mtx = np.sum(csr_mtx, axis = 1) + 1
+# new_mtx = csr_mtx / sum_mtx * 10000
+# csr_mtx = sparse.csr_matrix(np.log1p(new_mtx))
 
 k = 50
 
@@ -43,7 +41,7 @@ t2 = time()
 print("appro time: ", t2 - t1)
 
 t1 = time()
-exact_pca_mtx = exact_pca(csr_mtx, k=k)
+exact_pca_mtx = appro_pca_mtx #exact_pca(csr_mtx, k=k)
 t2 = time()
 print("exact time: ", t2 - t1)
 print("-" * 20)
